@@ -1,4 +1,4 @@
-# VIDEOWALL program Description
+# BOINC-STYLE program Description
 # ========================================================================================================
 # IMPORTANT: this program has a section at parallel_do_task() to be removed befor cloudbook make
 # The section has testing purposes in non-cloudbook version. This section is included inside 
@@ -20,7 +20,7 @@ import time
 import random
 import os
 #======================= GLOBAL VARS  =====================================================
-#__CLODUBOOK:GLOBAL__
+#__CLOUDBOOK:GLOBAL__
 epoch=0 # the same epoch for all agents processing
 number_of_agents=0
 
@@ -183,5 +183,5 @@ def du0_main_boinc_menu():
 		
 #===========================================================================================	
 
-#__CLOUDBOOK:main()__
+
 main()
