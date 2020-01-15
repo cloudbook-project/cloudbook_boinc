@@ -107,17 +107,14 @@ def parallel_do_task(epoch):
 	global number_of_agents
 	
 	
-# BEGIN FAKE LOCAL (DELETE AT CLOUDBOOK VERSION) !!!
-# ---------------------------------------------
 
 #__CLOUDBOOK:BEGINREMOVE__	
-	unique_id+=1
+	unique_id+=1 # this is a non shared variable
 	if (unique_id==number_of_agents+10):
 		unique_id=10
-	epoch_done=epoch-1	
+	epoch_done=epoch-1	# this is a non shared variable
 #__CLOUDBOOK:ENDREMOVE__	
 
-	# END FAKE LOCAL
 	
 	if (epoch_done!=epoch):
 		epoch_done=epoch
@@ -186,4 +183,5 @@ def du0_main_boinc_menu():
 		
 #===========================================================================================	
 
+#__CLOUDBOOK:main()__
 main()
