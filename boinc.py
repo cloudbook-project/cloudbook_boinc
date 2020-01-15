@@ -1,7 +1,8 @@
 # VIDEOWALL program Description
 # ========================================================================================================
 # IMPORTANT: this program has a section at parallel_do_task() to be removed befor cloudbook make
-# The section has testing purposes in non-cloudbook version
+# The section has testing purposes in non-cloudbook version. This section is included inside 
+# __CLOUDBOOK:BEGINREMOVE__ and __CLOUDBOOK:ENDREMOVE__ pragmas to delete automatically
 #
 #                   ------ program description ------
 # this program uses NONSHARED variables mechanism to asign a token to each different agent
@@ -20,11 +21,11 @@ import random
 import os
 #======================= GLOBAL VARS  =====================================================
 #__CLODUBOOK:GLOBAL__
-epoch=0
+epoch=0 # the same epoch for all agents processing
 number_of_agents=0
 
 
-# matches tokens with tasks
+# dictionary which matches tokens with tasks
 boinc_dict={}
 
 
@@ -32,7 +33,7 @@ boinc_dict={}
 unique_id=10 # TOKEN . it is a non shared value for agent_ids. starts at 10 for clarity
 
 #__CLOUDBOOK:NONSHARED__
-epoch_done=-1
+epoch_done=-1 # this is a non shared value for epoch to avoid repetitions of invocations
 
 # ==========================================================================================
 # MAIN function always falls into DU0 --> Agent0
@@ -46,30 +47,33 @@ def main():
 	print (" ")
 	print ("Welcome to BOINC program (V1.0)")
 	print ("============================")
-	text=input ("number of agents?:")
+	text=input ("aproximate number of agents ?:")
 	
 	global number_of_agents
 	number_of_agents=int(text)
+
 	# assign a portion to each machine invoking all
 	# ----------------------------------------------
-	for i in range(0,number_of_agents):
-		parallel_set_unique_ID(i+10,False) # this is a parallel function invoked on all agents
-		assign_task_to_unique_ID(i+10, "T1") # T1 is the default task
+	for i in range(0,number_of_agents*2): # multiply x2 in order to reach all alive agents
+		token=10 +i %number_of_agents 
+		parallel_set_unique_ID(token,False) # this is a parallel function invoked on all agents
+		DU0_assign_task_to_unique_ID(token, 1) # T1 is the default task
 	
-	print ("tasks dictionary after assigning tasks:")
-	print (boinc_dict)
+	DU0_list_agents_tasks()
 
-	main_boinc_menu()
+	DU0_main_boinc_menu()
 
 # ==========================================================================================
 #__CLOUDBOOK:PARALLEL__
 def parallel_T1():
-	print ("\n hello, i am ", unique_id, " doing T1")
+	cad="\n hello, i am "+ str(unique_id)+ " doing T1"
+	DU0_print (cad)
 
 # ==========================================================================================
 #__CLOUDBOOK:PARALLEL__
 def parallel_T2():
-	print ("\n hello, i am ", unique_id, " doing T2")
+	cad="\n hello, i am "+ str(unique_id)+ " doing T2"
+	DU0_print (cad)
 	
 # ==========================================================================================
 # this function is invoked from agent0 to any agent. 
@@ -86,9 +90,13 @@ def parallel_set_unique_ID(token,replace):
 
 # ==========================================================================================
 #__CLOUDBOOK:DU0__
-def assign_task_to_unique_ID(token, task):
+def DU0_assign_task_to_unique_ID(token, task):
 	boinc_dict[token]=task
 	
+# ==========================================================================================
+#__CLOUDBOOK:DU0__
+def DU0_print(cad):
+	print(cad)
 
 # ==========================================================================================
 #__CLOUDBOOK:PARALLEL__
@@ -99,35 +107,33 @@ def parallel_do_task(epoch):
 	global number_of_agents
 	
 	
-	# BEGIN FAKE LOCAL (DELETE AT CLOUDBOOK VERSION) !!!
-	# ---------------------------------------------
+# BEGIN FAKE LOCAL (DELETE AT CLOUDBOOK VERSION) !!!
+# ---------------------------------------------
+
+#__CLOUDBOOK:BEGINREMOVE__	
 	unique_id+=1
 	if (unique_id==number_of_agents+10):
 		unique_id=10
 	epoch_done=epoch-1	
+#__CLOUDBOOK:ENDREMOVE__	
+
 	# END FAKE LOCAL
 	
 	if (epoch_done!=epoch):
 		epoch_done=epoch
 		my_task=boinc_dict[unique_id]
-		if (my_task=="T1"):
+		if (my_task==1):
 			parallel_T1()
-		elif (my_task=="T2"):
+		elif (my_task==2):
 			parallel_T2()
-
-
-
 
 # ======================================================================================
 #__CLOUDBOOK:DU0__
-def interactive_run():
-	
-	#time.sleep(1)	
-	input("start? (press ENTER)")
-
-	# toggle ALL pause quickly at same time
+def DU0_interactive_run():
 	global number_of_agents
 	global epoch
+
+	input("start? (press ENTER)")
 	epoch=epoch+1
 	for i in range(number_of_agents):
 		parallel_do_task(epoch) 
@@ -137,18 +143,17 @@ def interactive_run():
 #__CLOUDBOOK:SYNC__
 	print ("\n all agents finished \n")
 
-
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def interactive_assign_task():
-	list_agents_tasks()
+def DU0_interactive_assign_task():
+	DU0_list_agents_tasks()
 	token1=int (input ("token1?:"))
-	task1=input ("task?:")
-	assign_task_to_unique_ID(token1, task1)
+	task1=int(input ("task?[1|2]:"))
+	DU0_assign_task_to_unique_ID(token1, task1)
 	return
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def list_agents_tasks():
+def DU0_list_agents_tasks():
 	print ("\n------ LIST OF AGENTS/TASKS --------\n")
 	print (boinc_dict)
 	print ("\n------------------------------------\n")
@@ -157,7 +162,7 @@ def list_agents_tasks():
 
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def main_boinc_menu():
+def DU0_main_boinc_menu():
 
 	while (True):		
 		#os.system('cls')  # on windows
@@ -171,13 +176,13 @@ def main_boinc_menu():
 		
 		command=input ("command?:")
 		if (command=="l"):
-			list_agents_tasks()
+			DU0_list_agents_tasks()
 		elif (command=="x"):
 			sys.exit()
 		elif (command=="a"):
-			interactive_assign_task()
+			DU0_interactive_assign_task()
 		elif (command=="r"):
-			interactive_run()
+			DU0_interactive_run()
 		
 #===========================================================================================	
 
