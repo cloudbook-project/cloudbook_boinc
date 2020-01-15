@@ -57,23 +57,23 @@ def main():
 	for i in range(0,number_of_agents*2): # multiply x2 in order to reach all alive agents
 		token=10 +i %number_of_agents 
 		parallel_set_unique_ID(token,False) # this is a parallel function invoked on all agents
-		DU0_assign_task_to_unique_ID(token, 1) # T1 is the default task
+		du0_assign_task_to_unique_ID(token, 1) # T1 is the default task
 	
-	DU0_list_agents_tasks()
+	du0_list_agents_tasks()
 
-	DU0_main_boinc_menu()
+	du0_main_boinc_menu()
 
 # ==========================================================================================
 #__CLOUDBOOK:PARALLEL__
 def parallel_T1():
 	cad="\n hello, i am "+ str(unique_id)+ " doing T1"
-	DU0_print (cad)
+	du0_print (cad)
 
 # ==========================================================================================
 #__CLOUDBOOK:PARALLEL__
 def parallel_T2():
 	cad="\n hello, i am "+ str(unique_id)+ " doing T2"
-	DU0_print (cad)
+	du0_print (cad)
 	
 # ==========================================================================================
 # this function is invoked from agent0 to any agent. 
@@ -90,12 +90,12 @@ def parallel_set_unique_ID(token,replace):
 
 # ==========================================================================================
 #__CLOUDBOOK:DU0__
-def DU0_assign_task_to_unique_ID(token, task):
+def du0_assign_task_to_unique_ID(token, task):
 	boinc_dict[token]=task
 	
 # ==========================================================================================
 #__CLOUDBOOK:DU0__
-def DU0_print(cad):
+def du0_print(cad):
 	print(cad)
 
 # ==========================================================================================
@@ -129,7 +129,7 @@ def parallel_do_task(epoch):
 
 # ======================================================================================
 #__CLOUDBOOK:DU0__
-def DU0_interactive_run():
+def du0_interactive_run():
 	global number_of_agents
 	global epoch
 
@@ -145,15 +145,15 @@ def DU0_interactive_run():
 
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def DU0_interactive_assign_task():
-	DU0_list_agents_tasks()
+def du0_interactive_assign_task():
+	du0_list_agents_tasks()
 	token1=int (input ("token1?:"))
 	task1=int(input ("task?[1|2]:"))
-	DU0_assign_task_to_unique_ID(token1, task1)
+	du0_assign_task_to_unique_ID(token1, task1)
 	return
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def DU0_list_agents_tasks():
+def du0_list_agents_tasks():
 	print ("\n------ LIST OF AGENTS/TASKS --------\n")
 	print (boinc_dict)
 	print ("\n------------------------------------\n")
@@ -162,7 +162,7 @@ def DU0_list_agents_tasks():
 
 #===========================================================================================	
 #__CLOUDBOOK:DU0__
-def DU0_main_boinc_menu():
+def du0_main_boinc_menu():
 
 	while (True):		
 		#os.system('cls')  # on windows
@@ -176,13 +176,13 @@ def DU0_main_boinc_menu():
 		
 		command=input ("command?:")
 		if (command=="l"):
-			DU0_list_agents_tasks()
+			du0_list_agents_tasks()
 		elif (command=="x"):
 			sys.exit()
 		elif (command=="a"):
-			DU0_interactive_assign_task()
+			du0_interactive_assign_task()
 		elif (command=="r"):
-			DU0_interactive_run()
+			du0_interactive_run()
 		
 #===========================================================================================	
 
