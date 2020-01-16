@@ -46,10 +46,10 @@ def main():
 	print (" ")
 	print (" ")
 	print ("Welcome to BOINC program (V1.0)")
-	print ("============================")
+	print ("===============================")
 	text=""
 	while text=="":
-		text=input ("aproximate number of agents ?:")
+		text=input ("Aproximate number of agents?:")
 	
 	global number_of_agents
 	number_of_agents=int(text)
@@ -93,6 +93,7 @@ def parallel_set_unique_ID(token,replace):
 # ==========================================================================================
 #__CLOUDBOOK:DU0__
 def du0_assign_task_to_unique_ID(token, task):
+	global boinc_dict
 	boinc_dict[token]=task
 	
 # ==========================================================================================
