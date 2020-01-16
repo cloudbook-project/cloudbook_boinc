@@ -47,14 +47,16 @@ def main():
 	print (" ")
 	print ("Welcome to BOINC program (V1.0)")
 	print ("============================")
-	text=input ("aproximate number of agents ?:")
+	text=""
+	while text=="":
+		text=input ("aproximate number of agents ?:")
 	
 	global number_of_agents
 	number_of_agents=int(text)
 
 	# assign a portion to each machine invoking all
 	# ----------------------------------------------
-	for i in range(0,number_of_agents*2): # multiply x2 in order to reach all alive agents
+	for i in range(0,number_of_agents): 
 		token=10 +i %number_of_agents 
 		parallel_set_unique_ID(token,False) # this is a parallel function invoked on all agents
 		du0_assign_task_to_unique_ID(token, 1) # T1 is the default task
@@ -108,12 +110,12 @@ def parallel_do_task(epoch):
 	
 	
 
-#__CLOUDBOOK:BEGINREMOVE__	
+	#__CLOUDBOOK:BEGINREMOVE__	
 	unique_id+=1 # this is a non shared variable
 	if (unique_id==number_of_agents+10):
 		unique_id=10
 	epoch_done=epoch-1	# this is a non shared variable
-#__CLOUDBOOK:ENDREMOVE__	
+	#__CLOUDBOOK:ENDREMOVE__	
 
 	
 	if (epoch_done!=epoch):
@@ -137,7 +139,7 @@ def du0_interactive_run():
 
 	print ("\n all agents launched \n")
 	
-#__CLOUDBOOK:SYNC__
+	#__CLOUDBOOK:SYNC__
 	print ("\n all agents finished \n")
 
 #===========================================================================================	
