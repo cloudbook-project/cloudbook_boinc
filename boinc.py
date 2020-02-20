@@ -66,15 +66,15 @@ def main():
 	du0_main_boinc_menu()
 
 # ==========================================================================================
-#__CLOUDBOOK:PARALLEL__
-def parallel_T1():
-	cad="\n hello, i am "+ str(unique_id)+ " doing T1"
+#__CLOUDBOOK:LOCAL__
+def local_T1():
+	cad="\n hello, I am "+ str(unique_id)+ " doing T1"
 	du0_print (cad)
 
 # ==========================================================================================
-#__CLOUDBOOK:PARALLEL__
-def parallel_T2():
-	cad="\n hello, i am "+ str(unique_id)+ " doing T2"
+#__CLOUDBOOK:LOCAL__
+def local_T2():
+	cad="\n hello, I am "+ str(unique_id)+ " doing T2"
 	du0_print (cad)
 	
 # ==========================================================================================
@@ -123,9 +123,9 @@ def parallel_do_task(epoch):
 		epoch_done=epoch
 		my_task=boinc_dict[unique_id]
 		if (my_task==1):
-			parallel_T1()
+			local_T1()
 		elif (my_task==2):
-			parallel_T2()
+			local_T2()
 
 # ======================================================================================
 #__CLOUDBOOK:DU0__
