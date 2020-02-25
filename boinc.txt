@@ -31,7 +31,6 @@ epoch_done=-1 # this is a non shared value for epoch to avoid repetitions of inv
 
 # ==========================================================================================
 # MAIN function always falls into DU0 --> Agent0
-#__CLOUDBOOK:MAIN__
 def main():
 	global boinc_dict
 	os.system('cls')  # on windows
