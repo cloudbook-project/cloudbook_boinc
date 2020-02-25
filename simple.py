@@ -17,7 +17,6 @@ number_of_agents=0
 # MAIN function always falls into DU0 --> Agent0
 #__CLOUDBOOK:MAIN__
 def main():
-	global boinc_dict
 	os.system('cls')  # on windows
 	#########################################
 	#main program to execute by command line
